@@ -19,6 +19,18 @@ angular
             .then(({data: {title}}) => $scope.title = title)
     })
     .controller('ChatCtrl', function($scope, $http) {
+        $scope.sendMessage = () => {
+            const msg = {
+                "author":     $scope.author,
+                "content":    $scope.content
+            }
+
+            $http
+                .post('/api/messages', msg)
+                .then(() =>  $scope.messages.push(msg))
+                .catch(console.error)
+        }
+
         $http
             .get('/api/messages')
             .then((data) => {$scope.messages = data.data.messages})
