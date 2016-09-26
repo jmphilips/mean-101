@@ -1,0 +1,21 @@
+{
+  "name": "mean-101",
+  "homepage": "https://github.com/jmphilips/mean-101",
+  "authors": [
+    "Joshua Philips <jmichaelphilips@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "client/lib"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}
