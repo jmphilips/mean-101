@@ -1,0 +1,10 @@
+<h2>Welcome to the chat room</h2>
+
+<form> 
+    <input type="text">
+    <input type="submit">
+</form>
+<hr />
+<ul>
+    <li ng-repeat="msg in messages">{{msg.author}}: {{msg.content}}</li>
+</ul>

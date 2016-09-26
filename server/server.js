@@ -1,14 +1,37 @@
 'use strict'
 
 const express = require('express');
+const mongoose = require('mongoose');
+
+
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/meanchat';
 
 app.use(express.static('client'));
 
 app.get('/api/title', (req, res) => {
-    res.send({title: 'MEAN 101 from Node'})
+    res.send({title: 'MEAN Chat'})
 })
 
-app.listen(port, () => {`Listening on port: ${port}`});
+
+const Message = mongoose.model('message', {
+    author: String, 
+    content: String
+})
+
+
+
+app.get('/api/messages', (req, res, err) => {
+    Message.find()
+        .then((messages) => {
+            res.json({messages})
+        })
+        .catch(err)
+})
+
+mongoose.promise = Promise
+mongoose.connect(MONGODB_URL, () => {
+    app.listen(PORT, () => {`Listening on port: ${PORT}`});
+})
