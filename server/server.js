@@ -3,9 +3,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { json } = require('body-parser');
-
+const { Server } = require('http');
+const socketio = require('socket.io');
 
 const app = express();
+const server = Server(app);
+const io = socketio(server);
+
+
 const PORT = process.env.PORT || 3000;
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/meanchat';
 
@@ -39,7 +44,13 @@ app.post('/api/messages', (req, res, err) => {
         .catch(err)
 })
 
-mongoose.promise = Promise
+mongoose.Promise = Promise
 mongoose.connect(MONGODB_URL, () => {
-    app.listen(PORT, () => {`Listening on port: ${PORT}`});
+    server.listen(PORT, () => {`Listening on port: ${PORT}`});
+})
+
+
+io.on('connection', socket => {
+    console.log(`Socket connected: ${socket.id}`);
+    socket.on('disconnect', () => console.log(`Socket disconnected: ${socket.id}`)); 
 })
